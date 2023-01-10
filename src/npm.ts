@@ -3,20 +3,21 @@ import { spawnPromise } from './fs';
 
 export type PackageManager = 'npm' | 'yarn' | 'pnpm';
 
-// License for `whichPm`
-// The MIT License (MIT)
-// Copyright (c) 2017-2022 Zoltan Kochan <z@kochan.io>
-// https://github.com/zkochan/packages/tree/main/which-pm-runs
+// From https://github.com/vercel/next.js/blob/5cd31e41ca652a3ecdf5966733242267da6083fc/packages/create-next-app/helpers/get-pkg-manager.ts
 export function whichPm(): PackageManager {
-  if (!process.env.npm_config_user_agent) {
-    return 'npm';
+  const userAgent = process.env.npm_config_user_agent
+
+  if (userAgent) {
+    if (userAgent.startsWith('yarn')) {
+      return 'yarn'
+    } else if (userAgent.startsWith('pnpm')) {
+      return 'pnpm'
+    } else {
+      return 'npm'
+    }
+  } else {
+    return 'npm'
   }
-
-  const pmSpec = process.env.npm_config_user_agent.split(' ')[0];
-  const separatorPos = pmSpec.lastIndexOf('/');
-  const name = pmSpec.substring(0, separatorPos);
-
-  return name as PackageManager;
 }
 
 export async function initPackage(
