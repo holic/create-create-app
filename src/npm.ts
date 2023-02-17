@@ -1,14 +1,23 @@
 import { CLIError, printCommand } from '.';
 import { spawnPromise } from './fs';
-import {
-  detect as detectPackageManager,
-  PM as PackageManager,
-} from 'detect-package-manager';
 
-export { PackageManager };
+export type PackageManager = 'npm' | 'yarn' | 'pnpm';
 
-export async function whichPm(): Promise<PackageManager> {
-  return await detectPackageManager();
+// From https://github.com/vercel/next.js/blob/5cd31e41ca652a3ecdf5966733242267da6083fc/packages/create-next-app/helpers/get-pkg-manager.ts
+export function whichPm(): PackageManager {
+  const userAgent = process.env.npm_config_user_agent
+
+  if (userAgent) {
+    if (userAgent.startsWith('yarn')) {
+      return 'yarn'
+    } else if (userAgent.startsWith('pnpm')) {
+      return 'pnpm'
+    } else {
+      return 'npm'
+    }
+  } else {
+    return 'npm'
+  }
 }
 
 export async function initPackage(

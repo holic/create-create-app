@@ -26,7 +26,6 @@
     "@types/yargs-interactive": "^2.1.3",
     "chalk": "^4",
     "cross-spawn": "^7.0.3",
-    "detect-package-manager": "^2.0.1",
     "epicfail": "^3.0.0",
     "execa": "^5",
     "gitconfig": "^2.0.8",
