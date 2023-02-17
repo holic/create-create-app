@@ -1,6 +1,7 @@
 import { CommonOptions, ExecaChildProcess } from 'execa';
 import { OptionData } from 'yargs-interactive';
-import { PM } from 'detect-package-manager';
+
+declare type PackageManager = 'npm' | 'yarn' | 'pnpm';
 
 interface Option {
     [key: string]: OptionData | {
@@ -40,7 +41,7 @@ interface Options {
     /** Default value for package manager (default: `undefined`)
      *
      * `npm`, `yarn` and `pnpm` are available. `undefined` to auto detect package manager. */
-    defaultPackageManager?: PM;
+    defaultPackageManager?: PackageManager;
     /** Interactively asks users for a description */
     promptForDescription?: boolean;
     /** Interactively asks users for a package author */
@@ -122,7 +123,7 @@ interface AfterHookOptions {
     /** Current year */
     year: number;
     /** Node.js package manager to be used to initialize a package */
-    packageManager: PM;
+    packageManager: PackageManager;
     /** records of user inputs */
     answers: Answers;
     /** Package name
