@@ -341,7 +341,7 @@ export async function create(appName: string, options: Options) {
   }
 
   // guess which package manager to use
-  const packageManager = args['node-pm'] ?? whichPm();
+  const packageManager = args['node-pm'] ?? whichPm(templateDir);
 
   const ignoredProps = ['name', 'interactive', 'node-pm', 'nodePm'];
   const filteredArgs = Object.entries<string>(args)
